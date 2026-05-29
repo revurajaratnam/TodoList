@@ -54,6 +54,10 @@ function TodoList(props) {
                     className="btn btn-danger mx-2"
                     >delete</button>
                     <button 
+                    className="btn btn-success mx-2"
+                    onClick={()=>iscompleted(t.id)}
+                    >Done</button>
+                      <button 
                     className="btn btn-success"
                     onClick={()=>iscompleted(t.id)}
                     >Done</button>
@@ -73,7 +77,6 @@ function TodoList(props) {
                    <button 
                     className="btn btn-danger"
                     >delete</button>
-                    
                    </div>
                     </li>
                 })}
