@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-function TodoList(props) {
+import DeleteTask from "./DeleteTask";
+ export default function TodoList(props) {
     const [task,setTask]=useState([]);
     const [inputValue,setInputValue]=useState("");
     const handelInputs=(e)=>setInputValue(e.target.value);
@@ -20,8 +21,15 @@ function TodoList(props) {
                 return ts
 
         })
-        setTask(completedTasks)
+       
+    setTask(completedTasks)
 
+    }
+    const deletetodo=(id)=>{
+       const deletedTask= task.filter((t)=>{
+            return t.id!==id
+        })
+        setTask(deletedTask)
     }
     return(
         <div className="container">
@@ -50,13 +58,11 @@ function TodoList(props) {
                     className="border border-1 p-1 m-1 d-flex justify-content-between align-items-center rounded"
                     >{t.text}
                    <div  className="rounded">
-                   <button 
-                    className="btn btn-danger mx-2"
-                    >delete</button>
+                    <DeleteTask delete={()=> deletetodo(t.id)} />
                     <button 
                     className="btn btn-success mx-2"
                     onClick={()=>iscompleted(t.id)}
-                    >Done</button>
+                    >Update</button>
                       <button 
                     className="btn btn-success"
                     onClick={()=>iscompleted(t.id)}
@@ -67,22 +73,8 @@ function TodoList(props) {
             </ul>
             <h1 className="text-center fs-6">Completed Tasks</h1>
 
-            <ul className="container list-unstyled">
-                {task.filter((t)=>t.completed).map((t)=>{
-                    return <li
-                    key={t.id}
-                    className="border border-1 p-1 m-1 d-flex justify-content-between align-items-center"
-                    >{t.text}
-                   <div >
-                   <button 
-                    className="btn btn-danger"
-                    >delete</button>
-                   </div>
-                    </li>
-                })}
-            </ul>
+            
 
         </div>
     )
 }
-export default TodoList;
