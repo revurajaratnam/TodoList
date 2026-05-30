@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import DeleteTask from "./DeleteTask";
+import Donetodo from "./DoneTask";
+import Updatetodo from "./Update";
  export default function TodoList(props) {
     const [task,setTask]=useState([]);
     const [inputValue,setInputValue]=useState("");
@@ -31,6 +33,19 @@ import DeleteTask from "./DeleteTask";
         })
         setTask(deletedTask)
     }
+    const updatetodo=(id)=>{
+        const updateTask=task.map((t)=>{
+            if(t.id===id){
+                return{
+                    ...t,
+                    text:inputValue
+                };
+            }
+            return t;
+        })
+        setTask(updateTask)
+        setInputValue("")
+    }
     return(
         <div className="container">
             <h1 className="text-center text-info"
@@ -59,20 +74,26 @@ import DeleteTask from "./DeleteTask";
                     >{t.text}
                    <div  className="rounded">
                     <DeleteTask delete={()=> deletetodo(t.id)} />
-                    <button 
-                    className="btn btn-success mx-2"
-                    onClick={()=>iscompleted(t.id)}
-                    >Update</button>
-                      <button 
-                    className="btn btn-success"
-                    onClick={()=>iscompleted(t.id)}
-                    >Done</button>
+                    <Updatetodo updatedtask={()=> updatetodo(t.id,t.text)} />
+                     <Donetodo iscompleted={()=>iscompleted(t.id)} />
                    </div>
                     </li>
                 })}
             </ul>
-            <h1 className="text-center fs-6">Completed Tasks</h1>
-
+            <h1 className="text-center fs-6">Completed Tsasks</h1>
+            <ul className="container list-unstyled">
+                {task.filter((tasks)=>tasks.completed).map((t)=>{
+                    return <li
+                    key={t.id}
+                    className="border border-1 p-1 m-1 d-flex justify-content-between align-items-center rounded"
+                    >{t.text}
+                   <div  className="rounded">
+                    <DeleteTask delete={()=> deletetodo(t.id)} />
+                     <Donetodo iscompleted={()=>iscompleted(t.id)} />
+                   </div>
+                    </li>
+                })}
+            </ul>
             
 
         </div>
