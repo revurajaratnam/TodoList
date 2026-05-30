@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import DeleteTask from "./DeleteTask";
 import Donetodo from "./DoneTask";
 import Updatetodo from "./Update";
+import Undotodo from "./UndoTask";
  export default function TodoList(props) {
     const [task,setTask]=useState([]);
     const [inputValue,setInputValue]=useState("");
@@ -45,6 +46,20 @@ import Updatetodo from "./Update";
         })
         setTask(updateTask)
         setInputValue("")
+    }
+    const undotodo=(id)=>{
+        const Undo=task.map((t)=>{
+           if(t.id!== id){
+            return{
+                ...t,
+                text:inputValue
+            }
+           }
+           return t;
+        }
+    
+        
+    )
     }
     return(
         <div className="container">
@@ -90,6 +105,7 @@ import Updatetodo from "./Update";
                    <div  className="rounded">
                     <DeleteTask delete={()=> deletetodo(t.id)} />
                      <Donetodo iscompleted={()=>iscompleted(t.id)} />
+                    <Undotodo undotask={()=>Undotodo(t.id)} />
                    </div>
                     </li>
                 })}
