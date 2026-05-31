@@ -57,6 +57,8 @@ import Undotodo from "./UndoTask";
         })
     setTask(Undotodi);
     }
+    const activeTask=task.filter((t)=> !t.completed);
+    const completedTask=task.filter((t)=> t.completed);
     return(
         <div className="container">
             <h1 className="text-center text-info"
@@ -75,14 +77,14 @@ import Undotodo from "./UndoTask";
 
             ><i className="bi bi-plus-square"></i></button>
            </div>
-
-            <h1 className="text-center fs-6">Active Tasks</h1>
+                { activeTask.length>0 && <h1 className="text-center fs-6">Active Tasks</h1>}
             <ul className="container list-unstyled">
-                {task.filter((tasks)=>!tasks.completed).map((t)=>{
+                {task.filter((tasks)=>!tasks.completed ).map((t)=>{
                     return <li
                     key={t.id}
                     className="border border-1 p-1 m-1 d-flex justify-content-between align-items-center rounded"
-                    >{t.text}
+                    >
+                        {t.text}
                    <div  className="rounded">
                     <DeleteTask delete={()=> deletetodo(t.id)} />
                     <Updatetodo updatedtask={()=> updatetodo(t.id)} />
@@ -91,7 +93,8 @@ import Undotodo from "./UndoTask";
                     </li>
                 })}
             </ul>
-            <h1 className="text-center fs-6">Completed Tasks</h1>
+           
+            {completedTask.length>0 &&   <h1 className="text-center fs-6">Completed Tasks</h1>}
             <ul className="container list-unstyled">
                 {task.filter((tasks)=>tasks.completed).map((t)=>{
                     return <li
@@ -100,7 +103,6 @@ import Undotodo from "./UndoTask";
                     >{t.text}
                    <div  className="rounded">
                     <DeleteTask delete={()=> deletetodo(t.id)} />
-                     <Donetodo iscompleted={()=>iscompleted(t.id)} />
                     <Undotodo undotask={()=>undotodo(t.id)} />
                    </div>
                     </li>
