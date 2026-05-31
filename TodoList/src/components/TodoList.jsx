@@ -34,32 +34,28 @@ import Undotodo from "./UndoTask";
         })
         setTask(deletedTask)
     }
-    const updatetodo=(id)=>{
-        const updateTask=task.map((t)=>{
-            if(t.id===id){
-                return{
-                    ...t,
-                    text:inputValue
-                };
-            }
-            return t;
+    const updatetodo=(id,text)=>{
+        const updateTask=task.find((t)=>{
+            return t.id === id;
         })
-        setTask(updateTask)
-        setInputValue("")
+        setInputValue(updateTask.text)
+        const remainingTasks = task.filter((t) => {
+            return t.id !== id;
+        });
+        setTask(remainingTasks)
+      
     }
     const undotodo=(id)=>{
-        const Undo=task.map((t)=>{
-           if(t.id!== id){
+        const Undotodi=task.map((t)=>{
+           if(t.id=== id){
             return{
                 ...t,
-                text:inputValue
+                completed:false
             }
            }
            return t;
-        }
-    
-        
-    )
+        })
+    setTask(Undotodi);
     }
     return(
         <div className="container">
@@ -89,13 +85,13 @@ import Undotodo from "./UndoTask";
                     >{t.text}
                    <div  className="rounded">
                     <DeleteTask delete={()=> deletetodo(t.id)} />
-                    <Updatetodo updatedtask={()=> updatetodo(t.id,t.text)} />
-                     <Donetodo iscompleted={()=>iscompleted(t.id)} />
+                    <Updatetodo updatedtask={()=> updatetodo(t.id)} />
+                    <Donetodo iscompleted={()=>iscompleted(t.id)} />
                    </div>
                     </li>
                 })}
             </ul>
-            <h1 className="text-center fs-6">Completed Tsasks</h1>
+            <h1 className="text-center fs-6">Completed Tasks</h1>
             <ul className="container list-unstyled">
                 {task.filter((tasks)=>tasks.completed).map((t)=>{
                     return <li
@@ -105,7 +101,7 @@ import Undotodo from "./UndoTask";
                    <div  className="rounded">
                     <DeleteTask delete={()=> deletetodo(t.id)} />
                      <Donetodo iscompleted={()=>iscompleted(t.id)} />
-                    <Undotodo undotask={()=>Undotodo(t.id)} />
+                    <Undotodo undotask={()=>undotodo(t.id)} />
                    </div>
                     </li>
                 })}
