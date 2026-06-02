@@ -94,7 +94,7 @@ import Undotodo from "./UndoTask";
                     key={t.id}
                     className="border border-1 p-2  d-flex justify-content-between align-items-center rounded  "
                        style={{marginBottom:"10px"}}  >
-                       <b> {t.text}</b>
+                       <input type="checkbox" />   <b> {t.text}</b>
                    <div  className="rounded">
                     <DeleteTask delete={()=> deletetodo(t.id)} />
                     <Updatetodo updatedtask={()=> updatetodo(t.id)} />
