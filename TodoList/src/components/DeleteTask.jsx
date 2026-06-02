@@ -4,7 +4,7 @@ import React from "react";
     return(
         <button 
         className="btn btn-danger mx-2"
-       onClick={props.delete} >delete</button>
+       onClick={props.delete} ><i className="bi bi-trash3-fill"></i></button>
     )
   
    

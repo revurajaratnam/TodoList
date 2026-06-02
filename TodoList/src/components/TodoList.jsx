@@ -59,9 +59,12 @@ import Undotodo from "./UndoTask";
     }
     const activeTask=task.filter((t)=> !t.completed);
     const completedTask=task.filter((t)=> t.completed);
+
+
     return(
-        <div className="container">
-            <h1 className="text-center text-info"
+        <div className="container my-4 rounded" style={{boxSizing:"content-box", width:"500px", boxShadow:"1px 2px 30px 5px rgba(0,0,0,0.25", paddingBottom:"20px", paddingTop:"20px" } }>
+            <div className="container">
+            <h1 className="text-center text-primary fw-bold"
             >
                 Todo-List</h1>
 
@@ -70,6 +73,9 @@ import Undotodo from "./UndoTask";
             className=" form-control form-control m-3" 
             value={inputValue} 
             onChange={handelInputs} 
+            onKeyDown={(e)=>{if(e.key==="Enter") addTask()}}
+            autoFocus
+            placeholder="Add a new task..."
             />
             <button 
             className="btn btn-primary  fs-5  btn-sm "
@@ -77,14 +83,18 @@ import Undotodo from "./UndoTask";
 
             ><i className="bi bi-plus-square"></i></button>
            </div>
-                { activeTask.length>0 && <h1 className="text-center fs-6">Active Tasks</h1>}
-            <ul className="container list-unstyled">
+                { activeTask.length>0 && <h1 className="text-center text-success fs-6">Active Tasks</h1>}
+                {task.length ===0 ?(
+                    <h6 className="text-center text-secondary p-4"><i class="bi bi-file-earmark-excel-fill"></i>    No tasks found.!</h6>
+                ):(
+                    <div>
+                        <ul className="container list-unstyled">
                 {task.filter((tasks)=>!tasks.completed ).map((t)=>{
                     return <li
                     key={t.id}
-                    className="border border-1 p-1 m-1 d-flex justify-content-between align-items-center rounded"
-                    >
-                        {t.text}
+                    className="border border-1 p-2  d-flex justify-content-between align-items-center rounded  "
+                       style={{marginBottom:"10px"}}  >
+                       <b> {t.text}</b>
                    <div  className="rounded">
                     <DeleteTask delete={()=> deletetodo(t.id)} />
                     <Updatetodo updatedtask={()=> updatetodo(t.id)} />
@@ -94,13 +104,13 @@ import Undotodo from "./UndoTask";
                 })}
             </ul>
            
-            {completedTask.length>0 &&   <h1 className="text-center fs-6">Completed Tasks</h1>}
+            {completedTask.length>0 &&   <h1 className="text-center text-danger fs-6">Completed Tasks</h1>}
             <ul className="container list-unstyled">
                 {task.filter((tasks)=>tasks.completed).map((t)=>{
                     return <li
                     key={t.id}
                     className="border border-1 p-1 m-1 d-flex justify-content-between align-items-center rounded"
-                    >{t.text}
+                    ><s><span className="text-danger">{t.text}</span></s>
                    <div  className="rounded">
                     <DeleteTask delete={()=> deletetodo(t.id)} />
                     <Undotodo undotask={()=>undotodo(t.id)} />
@@ -108,8 +118,12 @@ import Undotodo from "./UndoTask";
                     </li>
                 })}
             </ul>
-            
+                    </div>
+                )}
 
+
+            
+        </div>
         </div>
     )
 }

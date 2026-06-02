@@ -1,8 +1,8 @@
 export default function Updatetodo(props) {
     return(
          <button 
-            className="btn btn-success mx-2"
+            className="btn btn-warning mx-2"
              onClick={props.updatedtask}
-          >Update</button>
+          ><i className="bi bi-pencil-square"></i></button>
     )
 }
